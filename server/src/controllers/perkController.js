@@ -78,7 +78,7 @@ export async function updatePerk(req, res, next) {
     });
     const { value, error } = Joi.object(partialSchema).validate(req.body);
     if (error) return res.status(400).json({ message: error.message });
-    const doc = await Perk.updateOne({ _id: id }, value);
+    const doc = await Perk.findByIdAndUpdate({ _id: id }, value, { new: true });
     res.status(200).json({ perk: doc });
   } catch (err) {
     next(err);
